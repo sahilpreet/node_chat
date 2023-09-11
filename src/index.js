@@ -7,6 +7,8 @@ const userRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
 const postRouter = require("./routers/posts");
 
+const PORT=process.env.PORT || 8800
+
 //for environmet
 dotenv.config();
 //to connect mongoose
@@ -40,4 +42,4 @@ app.get("/", (req, res) => {
   res.send("node started");
 });
 
-app.listen(8800);
+app.listen(PORT);
