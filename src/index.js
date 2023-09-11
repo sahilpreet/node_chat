@@ -7,7 +7,7 @@ const userRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
 const postRouter = require("./routers/posts");
 
-const PORT=process.env.PORT || 8800
+const PORT = process.env.PORT || 8800;
 
 //for environmet
 dotenv.config();
@@ -28,7 +28,10 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   // res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   // res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
