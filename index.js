@@ -3,16 +3,16 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
 
-const userRouter = require("./routers/users");
-const authRouter = require("./routers/auth");
-const postRouter = require("./routers/posts");
+const userRouter = require("./src/routers/users");
+const authRouter = require("./src/routers/auth");
+const postRouter = require("./src/routers/posts");
 
 const PORT = process.env.PORT || 8800;
 
 //for environmet
 dotenv.config();
 //to connect mongoose
-require("./db/mongoose");
+require("./src/db/mongoose");
 
 const app = express();
 //to get req.body in json format
