@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
+// const cors = require("cors")
 
 const userRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
@@ -26,11 +27,12 @@ app.use(helmet());
 app.use(function (req, res, next) {
   //cors for all websites
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
+  // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   // res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
-  res.header(
+  res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   );
   // res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
