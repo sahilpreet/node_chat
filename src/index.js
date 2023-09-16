@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const userRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
 const postRouter = require("./routers/posts");
+const assetRouter = require("./routers/assets");
 
 const PORT = process.env.PORT || 8800;
 
@@ -41,6 +42,7 @@ app.use(function (req, res, next) {
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/assets", assetRouter);
 // app.use("/posts", postRouter);
 
 app.get("/", (req, res) => {

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Post = require("../models/posts");
 const User = require("../models/users");
+const Asset = require("../models/assets");
 const { all } = require("./auth");
 const multer = require("multer");
 const sharp = require("sharp");
@@ -120,7 +121,6 @@ const productImage = multer({
 
 router.post("/image/upload", productImage.single("file"), async (req, res) => {
   try {
-    console.log(req.body, req.file.buffer);
     const imageBuffer = await sharp(req.file.buffer)
       .resize({ height: 500, width: 500 })
       .png()
@@ -150,6 +150,7 @@ router.get("/image/download/:id", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 
 // router.post("/",(req,res)=>{
 
