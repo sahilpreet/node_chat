@@ -7,12 +7,12 @@ const sharp=require("sharp")
 
 const userImage = multer({
   limits: 5 * 1000 * 1000,
-  fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpeg|png|jpg)$/)) {
-      return cb(new Error("please upload an image"));
-    }
-    cb(undefined, true);
-  },
+  // fileFilter(req, file, cb) {
+  //   if (!file.originalname.match(/\.(jpeg|png|jpg)$/)) {
+  //     return cb(new Error("please upload an image"));
+  //   }
+  //   cb(undefined, true);
+  // },
 });
 
 

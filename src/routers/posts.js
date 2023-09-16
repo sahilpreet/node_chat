@@ -110,12 +110,12 @@ router.get("/profile/:username", async (req, res) => {
 
 const productImage = multer({
   limits: 5 * 1000 * 1000,
-  fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpeg|png|jpg)$/)) {
-      return cb(new Error("please upload an image"));
-    }
-    cb(undefined, true);
-  },
+  // fileFilter(req, file, cb) {
+  //   if (!file.originalname.match(/\.(jpeg|png|jpg)$/)) {
+  //     return cb(new Error("please upload an image"));
+  //   }
+  //   cb(undefined, true);
+  // },
 });
 
 router.post("/image/upload", productImage.single("file"), async (req, res) => {
