@@ -44,7 +44,8 @@ app.use("/api/posts", postRouter);
 // app.use("/posts", postRouter);
 
 app.get("/", (req, res) => {
-  res.send("node started");
+  res.send("node started at port="+PORT);
 });
 
+console.log("node started at port=",PORT);
 app.listen(PORT);

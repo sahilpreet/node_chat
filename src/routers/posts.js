@@ -80,9 +80,9 @@ router.get("/:id", async (req, res) => {
 
 router.post("/timeline/:userId", async (req, res) => {
   try {
-    const d1=Date.now()
-    console.log(req.body.followings)
-    const currentUser = req.body.followings
+    const d1 = Date.now();
+    console.log(req.body.followings);
+    const currentUser = req.body.followings;
     // const currentUser = await User.findById(req.params.userId);
     const userPosts = await Post.find({ userId: req.params.userId });
     const friendPosts = await Promise.all(
@@ -90,8 +90,8 @@ router.post("/timeline/:userId", async (req, res) => {
         return Post.find({ userId: friendId });
       })
     );
-    const d2=Date.now();
-    console.log((d2-d1)/60)
+    const d2 = Date.now();
+    console.log((d2 - d1) / 60);
     res.status(200).send(userPosts.concat(...friendPosts));
   } catch (error) {
     res.status(500).json(error);
@@ -122,6 +122,7 @@ router.post("/image/upload", productImage.single("file"), async (req, res) => {
   try {
     console.log(req.body, req.file.buffer);
     const imageBuffer = await sharp(req.file.buffer)
+      .resize({ height: 500, width: 500 })
       .png()
       .toBuffer()
       .catch((err) => {

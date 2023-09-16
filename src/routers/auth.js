@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const express = require("express")
+const express = require("express");
 const User = require("../models/users");
-const bcyrpt=require("bcrypt")
+const bcyrpt = require("bcrypt");
 const multer = require("multer");
-const sharp=require("sharp")
+const sharp = require("sharp");
 
 const userImage = multer({
   limits: 5 * 1000 * 1000,
@@ -15,18 +15,23 @@ const userImage = multer({
   // },
 });
 
-
-
-router.post("/register", userImage.single("file"),async (req, res) => {
+router.post("/register", userImage.single("file"), async (req, res) => {
   try {
-    const imageBuffer=await sharp(req.file.buffer).png().toBuffer().catch(err=>{console.log(err)})
-    const salt= await bcyrpt.genSalt(10)
-    const hashedpasssword = await bcyrpt.hash(req.body.password,salt)
+    const imageBuffer = await sharp(req.file.buffer)
+      .resize({ height: 500, width: 500 })
+      .png()
+      .toBuffer()
+      .catch((err) => {
+        console.log(err);
+      });
+    // const imageBuffer=await sharp(req.file.buffer).png().toBuffer().catch(err=>{console.log(err)})
+    const salt = await bcyrpt.genSalt(10);
+    const hashedpasssword = await bcyrpt.hash(req.body.password, salt);
     const user = await new User({
       username: req.body.username,
       email: req.body.email,
       password: hashedpasssword,
-      profilePicture:imageBuffer
+      profilePicture: imageBuffer,
     });
     const newUser = await user.save();
     res.status(200).json(newUser);
@@ -35,22 +40,22 @@ router.post("/register", userImage.single("file"),async (req, res) => {
   }
 });
 
-router.post("/login",async(req,res)=>{
+router.post("/login", async (req, res) => {
   try {
-    const user= await User.findOne({email:req.body.email})
-    user.profilePicture=""
-    !user && res.status(404).send("user not found")
-    
-    
-    const userPasswordMatched= await bcyrpt.compare(req.body.password,user.password)
-    !userPasswordMatched && res.status(400).send("password not matched")
+    const user = await User.findOne({ email: req.body.email });
+    user.profilePicture = "";
+    !user && res.status(404).send("user not found");
 
+    const userPasswordMatched = await bcyrpt.compare(
+      req.body.password,
+      user.password
+    );
+    !userPasswordMatched && res.status(400).send("password not matched");
 
-    res.status(200).json(user)
-    
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-})
+});
 
 module.exports = router;
