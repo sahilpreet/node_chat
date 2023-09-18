@@ -31,5 +31,6 @@
   },
   "homepage": "https://github.com/sahilpreet/node_chat#readme",
   "keywords": [],
+  "devDependencies": {},
   "description": ""
 }
