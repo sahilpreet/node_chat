@@ -8,6 +8,8 @@ const userRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
 const postRouter = require("./routers/posts");
 const assetRouter = require("./routers/assets");
+const conversationRouter = require("./routers/conversations");
+const messageRouter = require("./routers/messages");
 
 const PORT = process.env.PORT || 8800;
 
@@ -15,6 +17,8 @@ const PORT = process.env.PORT || 8800;
 dotenv.config();
 //to connect mongoose
 require("./db/mongoose");
+//to run socket
+require('./routers/socket')
 
 const app = express();
 //to get req.body in json format
@@ -42,6 +46,8 @@ app.use(function (req, res, next) {
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/conversations", conversationRouter);
+app.use("/api/messages", messageRouter);
 app.use("/api/assets", assetRouter);
 // app.use("/posts", postRouter);
 

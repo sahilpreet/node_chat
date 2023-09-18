@@ -80,8 +80,8 @@ router.get("/friends/:userId", async (req, res) => {
     );
     let friendList = [];
     friends.map((friend) => {
-      const { _id, username, profilePicture } = friend;
-      friendList.push({ _id, username, profilePicture });
+      const { _id, username } = friend;
+      friendList.push({ _id, username });
     });
     res.status(200).json(friendList);
   } catch (error) {
@@ -136,6 +136,19 @@ router.get("/search", async (req, res) => {
     const user = await User.find({
       username: { $regex: req.query.name, $options: "i" },
     });
+    // const { createdAt, updatedAt, password, profilePicture, ...minimalInfo } =
+    //   user;
+    // console.log(minimalInfo);
+    user.filter((u)=>u["password"]="")
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+router.get("/allusers", async (req, res) => {
+  try {
+    const user = await User.find({});
     // const { createdAt, updatedAt, password, profilePicture, ...minimalInfo } =
     //   user;
     // console.log(minimalInfo);
