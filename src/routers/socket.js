@@ -3,11 +3,20 @@ const { Server } = require("socket.io");
 
 // const httpServer = createServer();
 
-const io = new Server({
+const app = require("express")();
+const httpServer = require("http").createServer(app);
+
+const io = require("socket.io")(httpServer, {
   cors: {
     origin: "*",
   },
 });
+
+// const io = new Server(httpServer,{
+//   cors: {
+//     origin: "*",
+//   },
+// });
 
 let users = [];
 
@@ -56,4 +65,5 @@ io.on("connection", (socket) => {
 });
 
 console.log("socket started at port=8900");
-io.listen(process.env.SOCKET_PORT || 8900);
+// io.listen(process.env.SOCKET_PORT || 8900);
+httpServer.listen(process.env.SOCKET_PORT || 8900);
