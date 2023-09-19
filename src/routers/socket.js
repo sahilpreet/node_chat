@@ -1,12 +1,13 @@
 const { Server } = require("socket.io");
-// const createServer=require("https").createServer
+const createServer = require("http").createServer;
 
-// const httpServer = createServer();
+const httpServer = createServer();
 
-const app = require("express")();
-const httpServer = require("http").createServer(app);
+// const app = require("express")();
+// const httpServer = require("http").createServer(app);
 
 const io = require("socket.io")(httpServer, {
+  path: "/socket",
   cors: {
     origin: "*",
   },
@@ -18,19 +19,20 @@ const io = require("socket.io")(httpServer, {
 //   },
 // });
 
+
 let users = [];
 
 const addUser = (userId, socketId) => {
   !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
+  users.push({ userId, socketId });
 };
 
 const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
+    users = users.filter((user) => user.socketId !== socketId);
 };
 
 const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
+    return users.find((user) => user.userId === userId);
 };
 
 io.on("connection", (socket) => {
@@ -64,6 +66,6 @@ io.on("connection", (socket) => {
   }
 });
 
-console.log("socket started at port=8900");
+console.log("socket started at port=" + process.env.SOCKET_PORT);
 // io.listen(process.env.SOCKET_PORT || 8900);
 httpServer.listen(process.env.SOCKET_PORT || 8900);
